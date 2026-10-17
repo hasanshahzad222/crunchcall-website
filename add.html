@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Add me on CrunchCall</title>
+<meta name="description" content="You've been invited to CrunchCall: see which colleagues are heading to lunch, and join them in one tap.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <a class="brand" href="/"><span class="dot"></span>CrunchCall</a>
+    <h1 id="title">You're invited to CrunchCall</h1>
+    <p id="sub">See which colleagues are heading to lunch, and join them in one tap.</p>
+  </div>
+</header>
+<main class="wrap">
+  <div class="card">
+    <h3>Have the app?</h3>
+    <p class="muted">Tap below and CrunchCall opens straight to their profile so you can add them.</p>
+    <a class="btn" id="open" href="crunchcall://add">Open in CrunchCall</a>
+    <h3 style="margin-top:26px">New to CrunchCall?</h3>
+    <p class="muted" id="steps">Get the app, sign up, then search their username to add them.</p>
+    <a class="btn" id="get" href="#">Get CrunchCall</a>
+  </div>
+  <div class="links">
+    <a href="privacy.html">Privacy policy</a>
+    <a href="terms.html">Terms of use</a>
+  </div>
+</main>
+<script>
+  // ↓↓ Paste your TestFlight public link here now (and the App Store link once approved) ↓↓
+  var APP_LINK = 'https://testflight.apple.com/join/SXneTYSj';
+
+  var u = (new URLSearchParams(location.search).get('u') || '').toLowerCase().replace(/[^a-z0-9._]/g, '').slice(0, 20);
+  if (u) {
+    document.getElementById('title').textContent = '@' + u + ' invited you to CrunchCall';
+    document.getElementById('open').href = 'crunchcall://add?u=' + encodeURIComponent(u);
+    document.getElementById('steps').innerHTML = 'Get the app, sign up, then search <strong>@' + u + '</strong> in Friends to add them.';
+  }
+  document.getElementById('get').href = APP_LINK.indexOf('http') === 0 ? APP_LINK : '/';
+</script>
+</body>
+</html>
