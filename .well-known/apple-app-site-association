@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "K5RZ9G865H.app.lunchtable.ios",
+        "appIDs": ["K5RZ9G865H.app.lunchtable.ios"],
+        "paths": ["/add", "/add/*", "/add.html"],
+        "components": [{ "/": "/add*", "comment": "Invite links: crunchcall.app/add?u=username" }]
+      }
+    ]
+  }
+}
