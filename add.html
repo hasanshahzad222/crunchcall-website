@@ -23,23 +23,47 @@
     <h3 style="margin-top:26px">New to CrunchCall?</h3>
     <p class="muted" id="steps">Get the app, sign up, then search their username to add them.</p>
     <a class="btn" id="get" href="#">Get CrunchCall</a>
+    <p class="muted" style="margin-top:10px">iPhone now. Android coming soon.</p>
   </div>
   <div class="links">
     <a href="privacy.html">Privacy policy</a>
     <a href="terms.html">Terms of use</a>
   </div>
 </main>
+<script src="app-link.js"></script>
 <script>
-  // ↓↓ Paste your TestFlight public link here now (and the App Store link once approved) ↓↓
-  var APP_LINK = 'https://testflight.apple.com/join/SXneTYSj';
+  // The App Store link lives in app-link.js (one place for the whole website).
+  var APP_LINK = window.APP_LINK || '';
+  var lunch = new URLSearchParams(location.search).get('lunch') === '1';
 
   var u = (new URLSearchParams(location.search).get('u') || '').toLowerCase().replace(/[^a-z0-9._]/g, '').slice(0, 20);
   if (u) {
-    document.getElementById('title').textContent = '@' + u + ' invited you to CrunchCall';
+    // From "share my lunch": first name and place come in the link (n=Bea&at=Canteen). Text only, never HTML.
+    var q = new URLSearchParams(location.search);
+    var n = (q.get('n') || '').replace(/[<>]/g, '').slice(0, 30);
+    var at = (q.get('at') || '').replace(/[<>]/g, '').slice(0, 40);
+    var who = n || '@' + u;
+    document.getElementById('title').textContent = lunch
+      ? who + ' is heading to lunch' + (at ? ' · ' + at : '') + ' 🍽️'
+      : '@' + u + ' invited you to CrunchCall';
+    if (lunch) document.getElementById('sub').textContent = 'Join them on CrunchCall: see who is out for lunch, and join in one tap.';
     document.getElementById('open').href = 'crunchcall://add?u=' + encodeURIComponent(u);
     document.getElementById('steps').innerHTML = 'Get the app, sign up, then search <strong>@' + u + '</strong> in Friends to add them.';
   }
   document.getElementById('get').href = APP_LINK.indexOf('http') === 0 ? APP_LINK : '/';
+
+  // Scanned someone's QR code? If you have CrunchCall, your phone opens it straight to their
+  // profile (this page never shows). If not, go straight to the store to get it.
+  if (new URLSearchParams(location.search).get('qr') === '1') {
+    var ua = navigator.userAgent || '';
+    var ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var android = /Android/.test(ua);
+    var store = ios ? APP_LINK : android ? (window.PLAY_LINK || '') : '';
+    if (store.indexOf('http') === 0) {
+      document.getElementById('title').textContent = 'Opening the store…';
+      location.replace(store);
+    }
+  }
 </script>
 </body>
 </html>

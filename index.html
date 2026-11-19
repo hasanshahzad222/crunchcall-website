@@ -24,12 +24,17 @@
     <h3>Gone when you're done</h3>
     <p class="muted">Lunch statuses end by themselves after an hour.</p>
   </div>
-  <p class="muted" style="margin-top:22px">CrunchCall is in a pilot with hospital staff. It's coming to the App Store soon.</p>
+  <a class="btn" id="get" href="#" style="margin-top:22px">Download on the App Store</a>
+  <p class="muted" style="margin-top:10px">iPhone now. Android coming soon.</p>
   <div class="links">
     <a href="privacy.html">Privacy policy</a>
     <a href="terms.html">Terms of use</a>
     <a href="mailto:hello@crunchcall.app">hello@crunchcall.app</a>
   </div>
 </main>
+<script src="app-link.js"></script>
+<script>
+  document.getElementById('get').href = (window.APP_LINK || '').indexOf('http') === 0 ? window.APP_LINK : '/';
+</script>
 </body>
 </html>
